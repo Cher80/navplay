@@ -23,6 +23,9 @@ import kotlinx.coroutines.launch
  *
  * Вся навигация у нас делает pop/restore до destination_home. В таком случае:
  * У всех фрагментов отрабатывают onSaveInstanceState / savedInstanceState
+ *
+ * Из коробки (от Гугла) полоностью работает вытеснение/восстановление актикивити/процесса
+ * из памяти - сохраняюся все стеки и позиция выбранного таба
 
  */
 class BottomNavigationController(
