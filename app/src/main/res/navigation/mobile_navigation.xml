@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/destination_home">
+
+    <!--=====TAB HOME======-->
+    <fragment
+        android:id="@+id/destination_home"
+        android:name="com.example.nav.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <action
+        android:id="@+id/action_tab_home"
+        app:destination="@id/destination_home"
+        app:popUpTo="@id/destination_home"
+        app:popUpToSaveState="true"
+        app:restoreState="true" />
+
+
+    <!--=====TAB DASHBOARD======-->
+    <fragment
+        android:id="@+id/destination_dashboard"
+        android:name="com.example.nav.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <action
+        android:id="@+id/action_tab_dashboard"
+        app:destination="@id/destination_dashboard"
+        app:popUpTo="@id/destination_home"
+        app:popUpToSaveState="true"
+        app:restoreState="true" />
+
+
+    <!--=====TAB NOTIFICATIONS======-->
+    <fragment
+        android:id="@+id/destination_notifications"
+        android:name="com.example.nav.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <action
+        android:id="@+id/action_tab_notifications"
+        app:destination="@id/destination_notifications"
+        app:popUpTo="@id/destination_home"
+        app:popUpToSaveState="true"
+        app:restoreState="true" />
+
+
+    <!--=====PRODUCT======-->
+    <fragment
+        android:id="@+id/destination_product"
+        android:name="com.example.nav.ui.fproduct.ProductFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_product" />
+
+    <action
+        android:id="@+id/action_product"
+        app:destination="@id/destination_product" />
+
+
+    <!--=====SELLER======-->
+    <fragment
+        android:id="@+id/destination_seller"
+        android:name="com.example.nav.ui.fseller.SellerFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_seller" />
+
+    <action
+        android:id="@+id/action_seller"
+        app:destination="@id/destination_seller" />
+
+
+    <!--=====COMPANY======-->
+    <fragment
+        android:id="@+id/destination_company"
+        android:name="com.example.nav.ui.fcompany.CompanyFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_company" />
+
+    <action
+        android:id="@+id/action_company"
+        app:destination="@id/destination_company" />
+
+</navigation>
