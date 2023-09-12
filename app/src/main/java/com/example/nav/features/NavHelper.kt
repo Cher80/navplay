@@ -1,12 +1,13 @@
-package com.example.nav.ui
+package com.example.nav.features
 
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.nav.R
+import com.example.nav.navigation.Nav
 
 class NavHelper(
-    private val fragment: Fragment,
+    private val nav: Nav,
     private val pop: Button,
     private val home: Button,
     private val dashboard: Button,
@@ -20,32 +21,32 @@ class NavHelper(
     fun doBind() {
 
         pop.setOnClickListener {
-            NavHostFragment.findNavController(fragment).popBackStack()
+            nav.popBackStack()
         }
 
         home.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_tab_home)
+            nav.gotoHome()
         }
 
         dashboard.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_tab_dashboard)
+            nav.gotoDashboard()
         }
 
         notifications.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_tab_notifications)
+            nav.gotoNotifications()
         }
 
 
         product.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_product)
+            nav.gotoProduct()
         }
 
         seller.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_seller)
+            nav.gotoSeller()
         }
 
         company.setOnClickListener {
-            NavHostFragment.findNavController(fragment).navigate(R.id.action_company)
+            nav.gotoCompany()
         }
 
         plus.setOnClickListener {

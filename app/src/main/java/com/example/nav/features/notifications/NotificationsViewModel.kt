@@ -1,12 +1,20 @@
-package com.example.nav.ui.fcompany
+package com.example.nav.features.notifications
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.nav.navigation.Nav
+import com.example.nav.network.Network
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class CompanyViewModel : ViewModel() {
+@HiltViewModel
+class NotificationsViewModel @Inject constructor(
+    val nav: Nav,
+    private val network: Network,
+): ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"
@@ -14,13 +22,14 @@ class CompanyViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     init {
-        Log.d("gnavlife", "init CompanyViewModel")
+        Log.d("gnavlife", "init NotificationsViewModel")
     }
 
     var i = 0
     val iFlow = MutableStateFlow<Int>(i)
     fun plusI() {
         i++
+        network.doPlus(i)
         handleState()
     }
 
@@ -34,6 +43,6 @@ class CompanyViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("gnavlife", "onCleared CompanyViewModel")
+        Log.d("gnavlife", "onCleared NotificationsViewModel")
     }
 }

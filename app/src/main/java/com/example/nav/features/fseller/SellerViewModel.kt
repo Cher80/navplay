@@ -1,27 +1,35 @@
-package com.example.nav.ui.dashboard
+package com.example.nav.features.fseller
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.nav.navigation.Nav
+import com.example.nav.network.Network
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class DashboardViewModel : ViewModel() {
+@HiltViewModel
+class SellerViewModel @Inject constructor(
+    val nav: Nav,
+    private val network: Network
+) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is notifications Fragment"
     }
     val text: LiveData<String> = _text
 
     init {
-        Log.d("gnavlife", "init DashboardViewModel")
+        Log.d("gnavlife", "init SellerViewModel")
     }
-
 
     var i = 0
     val iFlow = MutableStateFlow<Int>(i)
     fun plusI() {
         i++
+        network.doPlus(i)
         handleState()
     }
 
@@ -35,6 +43,6 @@ class DashboardViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("gnavlife", "onCleared DashboardViewModel")
+        Log.d("gnavlife", "onCleared SellerViewModel")
     }
 }

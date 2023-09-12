@@ -3,14 +3,21 @@ package com.example.nav
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.nav.databinding.ActivityMainBinding
+import com.example.nav.navigation.Nav
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), Nav.ControllerProvider {
 
-
-
+    @Inject lateinit var nav: Nav
     val tabs = mutableListOf<BottomNavigationController.Tab>(
         BottomNavigationController.Tab(
             index = 0,
@@ -41,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("gnavlife", "MainActivity pre onCreate")
         super.onCreate(savedInstanceState)
+        nav.controllerProvider = this
         Log.d("gnavlife", "MainActivity post onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,6 +62,14 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationController.build()
     }
+
+    override fun provideNavController(): NavController {
+        return findNavController(R.id.nav_host_fragment_activity_main)
+    }
+
+    override fun provideLifecycleScope(): LifecycleCoroutineScope = this.lifecycleScope
+
+    override fun provideLifecycle(): Lifecycle = this.lifecycle
 }
 
 

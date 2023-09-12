@@ -29,6 +29,12 @@
             android:text="plus" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="camera" />
 
     <Button
         android:id="@+id/home"

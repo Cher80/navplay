@@ -8,7 +8,7 @@
     <!--=====TAB HOME======-->
     <fragment
         android:id="@+id/destination_home"
-        android:name="com.example.nav.ui.home.HomeFragment"
+        android:name="com.example.nav.features.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
@@ -23,7 +23,7 @@
     <!--=====TAB DASHBOARD======-->
     <fragment
         android:id="@+id/destination_dashboard"
-        android:name="com.example.nav.ui.dashboard.DashboardFragment"
+        android:name="com.example.nav.features.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
@@ -38,7 +38,7 @@
     <!--=====TAB NOTIFICATIONS======-->
     <fragment
         android:id="@+id/destination_notifications"
-        android:name="com.example.nav.ui.notifications.NotificationsFragment"
+        android:name="com.example.nav.features.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
@@ -53,7 +53,7 @@
     <!--=====PRODUCT======-->
     <fragment
         android:id="@+id/destination_product"
-        android:name="com.example.nav.ui.fproduct.ProductFragment"
+        android:name="com.example.nav.features.fproduct.ProductFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_product" />
 
@@ -65,7 +65,7 @@
     <!--=====SELLER======-->
     <fragment
         android:id="@+id/destination_seller"
-        android:name="com.example.nav.ui.fseller.SellerFragment"
+        android:name="com.example.nav.features.fseller.SellerFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_seller" />
 
@@ -77,12 +77,24 @@
     <!--=====COMPANY======-->
     <fragment
         android:id="@+id/destination_company"
-        android:name="com.example.nav.ui.fcompany.CompanyFragment"
+        android:name="com.example.nav.features.fcompany.CompanyFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_company" />
 
     <action
         android:id="@+id/action_company"
         app:destination="@id/destination_company" />
+
+
+    <!--=====CAMERA======-->
+    <fragment
+        android:id="@+id/destination_camera"
+        android:name="com.example.nav.features.camera.CameraFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_company" />
+
+    <action
+        android:id="@+id/action_camera"
+        app:destination="@id/destination_camera" />
 
 </navigation>

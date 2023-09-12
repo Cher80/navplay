@@ -1,4 +1,4 @@
-package com.example.nav.ui.dashboard
+package com.example.nav.features.notifications
 
 import android.content.Context
 import android.os.Bundle
@@ -9,32 +9,32 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.nav.databinding.FragmentDashboardBinding
-import com.example.nav.ui.NavHelper
+import com.example.nav.databinding.FragmentNotificationsBinding
+import com.example.nav.features.NavHelper
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class DashboardFragment : Fragment() {
+@AndroidEntryPoint
+class NotificationsFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentNotificationsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-    //val viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
-    val viewModel by viewModels<DashboardViewModel>()
-
+    val viewModel by viewModels<NotificationsViewModel>()
+    //val viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("gnavlife", "onAttach Dashboard")
-        viewModel.hashCode()
+        Log.d("gnavlife", "onAttach Notifications")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.i = savedInstanceState?.getInt("i") ?: 0
-        Log.d("gnavlife", "onCreate Dashboard savedInstanceState=$savedInstanceState")
+        Log.d("gnavlife", "onCreate Notifications savedInstanceState=$savedInstanceState")
     }
 
     override fun onCreateView(
@@ -42,13 +42,13 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("gnavlife", "onCreateView Dashboard")
+        Log.d("gnavlife", "onCreateView Notifications")
         viewModel.onCreateView()
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val navHelper = NavHelper(
-            fragment = this,
+            nav = viewModel.nav,
             pop = _binding!!.pop,
             home = _binding!!.home,
             dashboard = _binding!!.dashboard,
@@ -66,33 +66,33 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("gnavlife", "onViewCreated Dashboard")
+        Log.d("gnavlife", "onViewCreated Notifications")
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.iFlow.collect {
-                _binding?.text?.text = "Dashboard $it"
+                _binding?.text?.text = "Notifications $it"
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("gnavlife", "onDestroyView Dashboard")
+        Log.d("gnavlife", "onDestroyView Notifications")
         _binding = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("gnavlife", "onDestroy Dashboard")
+        Log.d("gnavlife", "onDestroy Notifications")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("gnavlife", "onDetach Dashboard")
+        Log.d("gnavlife", "onDetach Notifications")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("i",viewModel.i)
-        Log.d("gnavlife", "onSaveInstanceState Dashboard outState=$outState")
+        Log.d("gnavlife", "onSaveInstanceState Notifications outState=$outState")
         super.onSaveInstanceState(outState)
     }
 }

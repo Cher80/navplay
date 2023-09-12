@@ -1,4 +1,4 @@
-package com.example.nav.ui.fcompany
+package com.example.nav.features.fproduct
 
 import android.content.Context
 import android.os.Bundle
@@ -9,26 +9,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.nav.databinding.FragmentCompanyBinding
-import com.example.nav.ui.NavHelper
+import com.example.nav.databinding.FragmentProductBinding
+import com.example.nav.features.NavHelper
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class CompanyFragment : Fragment() {
+@AndroidEntryPoint
+class ProductFragment : Fragment() {
 
-    private var _binding: FragmentCompanyBinding? = null
+    private var _binding: FragmentProductBinding? = null
 
-    val viewModel by viewModels<CompanyViewModel>()
-    //val viewModel = ViewModelProvider(this).get(CompanyViewModel::class.java)
+    val viewModel by viewModels<ProductViewModel>()
+    //val viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("gnavlife", "onAttach Company")
+        Log.d("gnavlife", "onAttach Product")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.i = savedInstanceState?.getInt("i") ?: 0
-        Log.d("gnavlife", "onCreate Company savedInstanceState=$savedInstanceState")
+        Log.d("gnavlife", "onCreate Product savedInstanceState=$savedInstanceState")
     }
 
     override fun onCreateView(
@@ -36,13 +38,13 @@ class CompanyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("gnavlife", "onCreateView Company")
+        Log.d("gnavlife", "onCreateView Product")
         viewModel.onCreateView()
-        _binding = FragmentCompanyBinding.inflate(inflater, container, false)
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
         val root: View = _binding!!.root
 
         val navHelper = NavHelper(
-            fragment = this,
+            nav = viewModel.nav,
             pop = _binding!!.pop,
             home = _binding!!.home,
             dashboard = _binding!!.dashboard,
@@ -60,33 +62,33 @@ class CompanyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("gnavlife", "onViewCreated Company")
+        Log.d("gnavlife", "onViewCreated Product")
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.iFlow.collect {
-                _binding?.text?.text = "Company $it"
+                _binding?.text?.text = "Product $it"
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("gnavlife", "onDestroyView Company")
+        Log.d("gnavlife", "onDestroyView Product")
         _binding = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("gnavlife", "onDestroy Company")
+        Log.d("gnavlife", "onDestroy Product")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("gnavlife", "onDetach Company")
+        Log.d("gnavlife", "onDetach Product")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("i",viewModel.i)
-        Log.d("gnavlife", "onSaveInstanceState Company outState=$outState")
+        Log.d("gnavlife", "onSaveInstanceState Product outState=$outState")
         super.onSaveInstanceState(outState)
     }
 }

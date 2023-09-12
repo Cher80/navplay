@@ -2,6 +2,8 @@ package com.example.nav
 
 import android.util.Log
 import android.view.Menu
+import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +44,31 @@ class BottomNavigationController(
 
 
     fun build() {
+
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d(
+                    "gnavnav",
+                    "handleOnBackPressed navController.currentDestination=${navController.currentDestination}"
+                )
+                val curId = navController.currentDestination?.id
+                if (tabs.takeLast(tabs.size - 1).any { it.destinationId == curId }) {
+                    //bottomNavigationView.selectedItemId = tabs.first().destinationId
+                    navController.navigate(
+                        resId = tabs.first().actionId
+                    )
+                } else {
+                    this.isEnabled = false
+                    activity.onBackPressed()
+                    this.isEnabled = true
+                }
+
+            }
+        }
+
+        activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
+
         /**
          * Добавляем табы в bottomNavigationView
          */
