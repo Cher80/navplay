@@ -51,6 +51,10 @@ class HomeFragment : Fragment() {
             viewModel.nav.gotoCamera()
         }
 
+        binding.cameraSber.setOnClickListener {
+            viewModel.nav.gotoCameraSber()
+        }
+
         val navHelper = NavHelper(
             nav = viewModel.nav,
             pop = _binding!!.pop,

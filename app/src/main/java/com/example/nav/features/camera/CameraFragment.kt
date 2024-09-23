@@ -30,16 +30,11 @@ import java.util.concurrent.Executors
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
 
-    private var _binding: FragmentCameraBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private var binding: FragmentCameraBinding? = null
 
     val options = BarcodeScannerOptions.Builder()
         .setBarcodeFormats(
-            Barcode.FORMAT_QR_CODE,
-            Barcode.FORMAT_AZTEC
+            Barcode.FORMAT_ALL_FORMATS,
         )
         .enableAllPotentialBarcodes() // Optional
         .build()
@@ -114,8 +109,8 @@ class CameraFragment : Fragment() {
     ): View {
         Log.d("gnavlife", "onCreateView Camera")
         viewModel.onCreateView()
-        _binding = FragmentCameraBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentCameraBinding.inflate(inflater, container, false)
+        val root: View = binding!!.root
         return root
     }
 
@@ -146,7 +141,7 @@ class CameraFragment : Fragment() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                    it.setSurfaceProvider(binding?.viewFinder?.surfaceProvider)
                 }
 
             // Select back camera as a default
@@ -181,7 +176,8 @@ class CameraFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("gnavlife", "onDestroyView Camera")
-        _binding = null
+        scanner.close()
+        binding = null
     }
 
     override fun onDestroy() {
@@ -212,18 +208,21 @@ class CameraFragment : Fragment() {
                     InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
                 scanner.process(image)
                     .addOnSuccessListener { barcodeList ->
+                        Log.d(TAG, "barcodeList=$barcodeList")
                         val barcode = barcodeList.getOrNull(0)
+                        Log.d(TAG, "barcode=$barcode")
+                        Log.d(TAG, "barcode?.rawValue=${barcode?.rawValue}")
                         // `rawValue` is the decoded value of the barcode
                         barcode?.rawValue?.let { value ->
                             // update our textView to show the decoded value
-                            binding.result.text = value
+                            binding?.result?.text = value
                         }
                     }
                     .addOnFailureListener {
                         // This failure will happen if the barcode scanning model
                         // fails to download from Google Play Services
                         Log.e(TAG, it.message.orEmpty())
-                        binding.result.text = ""
+                        binding?.result?.text = ""
                     }.addOnCompleteListener {
                         // When the image is from CameraX analysis use case, must
                         // call image.close() on received images when finished

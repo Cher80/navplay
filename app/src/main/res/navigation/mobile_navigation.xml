@@ -97,4 +97,17 @@
         android:id="@+id/action_camera"
         app:destination="@id/destination_camera" />
 
+
+
+    <!--=====CAMERA SBER ======-->
+    <fragment
+        android:id="@+id/destination_camera_sber"
+        android:name="com.example.nav.features.camerasber.CameraSberFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_company" />
+
+    <action
+        android:id="@+id/action_camera_sber"
+        app:destination="@id/destination_camera_sber" />
+
 </navigation>

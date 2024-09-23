@@ -60,6 +60,10 @@ class Nav @Inject constructor() {
         navigate(R.id.action_camera)
     }
 
+    fun gotoCameraSber() {
+        navigate(R.id.action_camera_sber)
+    }
+
     private fun navigate(
         @IdRes actionId: Int,
         args: Bundle? = null,

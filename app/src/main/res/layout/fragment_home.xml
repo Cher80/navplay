@@ -37,6 +37,13 @@
         android:text="camera" />
 
     <Button
+        android:id="@+id/cameraSber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="cameraSber" />
+
+    <Button
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

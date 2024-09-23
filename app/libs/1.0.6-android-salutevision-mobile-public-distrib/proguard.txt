@@ -1,0 +1,20 @@
+-keepdirectories
+-dontoptimize
+-keep class ru.sberdevices.salutevision.** { *; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
