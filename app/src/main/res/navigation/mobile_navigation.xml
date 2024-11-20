@@ -10,7 +10,14 @@
         android:id="@+id/destination_home"
         android:name="com.example.nav.features.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <argument
+            android:name="CONFIGURATOR_ID"
+            android:defaultValue="FINANCE_TAB1"
+            app:argType="string" />
+
+    </fragment>
 
     <action
         android:id="@+id/action_tab_home"
@@ -25,7 +32,14 @@
         android:id="@+id/destination_dashboard"
         android:name="com.example.nav.features.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+
+        <argument
+            android:name="CONFIGURATOR_ID"
+            android:defaultValue="FINANCE_TAB2"
+            app:argType="string" />
+
+    </fragment>
 
     <action
         android:id="@+id/action_tab_dashboard"
@@ -40,7 +54,13 @@
         android:id="@+id/destination_notifications"
         android:name="com.example.nav.features.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications">
+
+        <argument
+            android:name="CONFIGURATOR_ID"
+            android:defaultValue="FINANCE_TAB3"
+            app:argType="string" />
+    </fragment>
 
     <action
         android:id="@+id/action_tab_notifications"

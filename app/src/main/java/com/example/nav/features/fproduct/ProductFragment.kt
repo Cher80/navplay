@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.nav.base.BaseFragment
 import com.example.nav.databinding.FragmentProductBinding
 import com.example.nav.features.NavHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProductFragment : Fragment() {
+class ProductFragment : BaseFragment() {
 
     private var _binding: FragmentProductBinding? = null
 

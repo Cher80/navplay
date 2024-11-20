@@ -26,7 +26,8 @@ class HomeViewModel @Inject constructor(
     }
 
     var i = 0
-    val iFlow = MutableStateFlow<Int>(i)
+    var configuratorId = ""
+    val iFlow = MutableStateFlow<String>( "$i _ $configuratorId)")
 
     fun plusI() {
         i++
@@ -39,7 +40,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun handleState() {
-        iFlow.value = i
+        iFlow.value = "$i _ $configuratorId)"
     }
 
     override fun onCleared() {

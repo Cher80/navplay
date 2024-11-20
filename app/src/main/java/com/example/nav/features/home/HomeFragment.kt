@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.nav.base.BaseFragment
 import com.example.nav.databinding.FragmentHomeBinding
 import com.example.nav.features.NavHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -34,6 +35,9 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.i = savedInstanceState?.getInt("i") ?: 0
+        val configuratorId = arguments?.getString("CONFIGURATOR_ID") ?: "empty"
+        viewModel.configuratorId = configuratorId
+
         Log.d("gnavlife", "onCreate Home savedInstanceState=$savedInstanceState")
     }
 
@@ -44,6 +48,7 @@ class HomeFragment : Fragment() {
     ): View {
         Log.d("gnavlife", "onCreateView Home")
         viewModel.onCreateView()
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

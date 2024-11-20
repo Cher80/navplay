@@ -6,9 +6,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.withStarted
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import com.example.nav.BottomNavigationController
 import com.example.nav.R
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,11 +25,10 @@ class Nav @Inject constructor() {
     fun popBackStack() {
         controllerProvider.provideLifecycleScope().launch {
             controllerProvider.provideLifecycle().withStarted {
-                controllerProvider.provideNavController().popBackStack()
+                controllerProvider.provideBottomNavigationController()?.popBackStack()
             }
         }
     }
-
 
 
     fun gotoHome() {
@@ -73,13 +72,18 @@ class Nav @Inject constructor() {
         navJob?.cancel()
         navJob = controllerProvider.provideLifecycleScope().launch {
             controllerProvider.provideLifecycle().withStarted {
-                controllerProvider.provideNavController().navigate(actionId, args, navOptions, navigatorExtras)
+                controllerProvider.provideBottomNavigationController()?.navigate(
+                    actionId = actionId,
+                    args = args,
+                    navOptions = navOptions,
+                    navigatorExtras = navigatorExtras
+                )
             }
         }
     }
 
     interface ControllerProvider {
-        fun provideNavController(): NavController
+        fun provideBottomNavigationController(): BottomNavigationController?
         fun provideLifecycleScope(): LifecycleCoroutineScope
         fun provideLifecycle(): Lifecycle
     }

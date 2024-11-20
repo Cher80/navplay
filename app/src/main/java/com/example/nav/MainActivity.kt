@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.nav.databinding.ActivityMainBinding
 import com.example.nav.navigation.Nav
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,6 +41,8 @@ class MainActivity : AppCompatActivity(), Nav.ControllerProvider {
         )
     )
 
+    var bottomNavigationController: BottomNavigationController? = null
+
 
     private lateinit var binding: ActivityMainBinding
 
@@ -53,18 +54,18 @@ class MainActivity : AppCompatActivity(), Nav.ControllerProvider {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bottomNavigationController = BottomNavigationController(
+        bottomNavigationController = BottomNavigationController(
             tabs = tabs,
             activity = this,
             bottomNavigationView = binding.navView,
             navController = findNavController(R.id.nav_host_fragment_activity_main)
-        )
-
-        bottomNavigationController.build()
+        ).apply {
+            build()
+        }
     }
 
-    override fun provideNavController(): NavController {
-        return findNavController(R.id.nav_host_fragment_activity_main)
+    override fun provideBottomNavigationController(): BottomNavigationController? {
+        return bottomNavigationController
     }
 
     override fun provideLifecycleScope(): LifecycleCoroutineScope = this.lifecycleScope

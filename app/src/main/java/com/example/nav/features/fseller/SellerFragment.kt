@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.nav.base.BaseFragment
 import com.example.nav.databinding.FragmentSellerBinding
 import com.example.nav.features.NavHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SellerFragment : Fragment() {
+class SellerFragment : BaseFragment() {
 
     private var _binding: FragmentSellerBinding? = null
     val viewModel by viewModels<SellerViewModel>()
