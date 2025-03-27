@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
+import androidx.camera.core.resolutionselector.ResolutionSelector
+import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -36,7 +39,13 @@ class CameraSberFragment : BaseFragment() {
 
     private var binding: FragmentCameraSberBinding? = null
 
+    val resolutionSelector = ResolutionSelector.Builder().setResolutionStrategy(
+        ResolutionStrategy(Size(4280, 5720),
+            ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER)
+    ).build()
+
     private val analysisUseCase = ImageAnalysis.Builder()
+        .setResolutionSelector(resolutionSelector)
         .build().apply {
             setAnalyzer(Executors.newSingleThreadExecutor(), YourImageAnalyzer())
         }
@@ -44,6 +53,7 @@ class CameraSberFragment : BaseFragment() {
     private val viewModel by viewModels<CameraSberViewModel>()
 
     private val recognizer = SaluteVisionSdk.createBarcodeRecognizer()
+
 
     private val activityResultLauncher =
         registerForActivityResult(
@@ -129,8 +139,16 @@ class CameraSberFragment : BaseFragment() {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
+            val screenSize = Size(4280, 5720)
+            val resolutionSelector = ResolutionSelector.Builder().setResolutionStrategy(
+                ResolutionStrategy(screenSize,
+                ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER)
+            ).build()
+
+
             // Preview
             val preview = Preview.Builder()
+                .setResolutionSelector(resolutionSelector)
                 .build()
                 .also {
                     it.setSurfaceProvider(binding?.viewFinder?.surfaceProvider)
@@ -197,7 +215,7 @@ class CameraSberFragment : BaseFragment() {
 
                 val image =
                     InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-                Log.d("dasdasd", "image = $image")
+
 
 
                 val visionImage = SaluteVisionImage(
@@ -206,12 +224,14 @@ class CameraSberFragment : BaseFragment() {
                     imageProxy.imageInfo.rotationDegrees
                 )
 
+                Log.d("dasdasd", "imageProxy=${imageProxy.width} ${imageProxy.height} image =${image.width} ${image.height} visionImage = ${visionImage.size}")
+
                 val codes = recognizer.process(visionImage, null)
 
 
                 // Обработка результатов
                 if (codes.isNotEmpty()) {
-                    Log.d("dasdasdff", "codes = $codes")
+                    Log.d("dasdasd", "codes = $codes")
                     codes.forEach {  barcodeRecognition ->
                         if (barcodeRecognition.info?.text != null) {
                             binding?.result?.post {
